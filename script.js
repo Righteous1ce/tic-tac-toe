@@ -1,7 +1,64 @@
+////////// CREATE PLAYER \\\\\\\\\\
+
+const createPlayer = (name, marker) => {
+    return { name, marker };
+  };
+
+
+
+////////// GAMEBOARD OBJECT \\\\\\\\\\
+const gameBoard = (() => {
+    let board = [];
+    for (let i = 0; i < 9; i++) {
+      board.push(" ");
+    }
+  
+    let gameBoardContainer = document.querySelector('.gameboard');
+  
+    board.forEach((item, index) => {
+      const tile = document.createElement('div');
+      tile.className = 'tile';
+      gameBoardContainer.appendChild(tile);
+    });
+
+
+    let tile = gameBoardContainer.querySelectorAll('.tile');
+
+    tiles.forEach((item, index) => {
+        tile.addEventListener('click', () => {
+            if(tile.tileContent === ' ') {
+                const player = currentPlayerSymbol();
+                tile.tileContent  = player;
+            }
+        })
+
+    })
+  
+    return board;
+  })();
+  
+  console.log(gameBoard);
+  
+
+
+
+
+
+
+
+
+/*
+
+
+////////// CREATE PLAYER \\\\\\\\\\
+
 const createPlayer = (name, maker) => {
   return { name, maker };
 };
 
+
+
+////////// GAMEBOARD OBJECT \\\\\\\\\\ 
 const gameBoard = (() => {
   let board = [];
   for (let i = 0; i < 9; i++) {
@@ -23,30 +80,5 @@ const gameBoard = (() => {
 console.log(gameBoard);
 
 
-
-
-/*
-
-const createPlayer = (name, maker) => {
-    return{name, maker};
-}
-
-
-const gameBoard = (() => {
-    let board = [];
-    for(i = 0; i < 9; i++) {
-        board.push(" ");
-    }
-    return board;
-
-    let tiles = document.querySelector('.tiles');
-
-board.forEach((item, index) => {
-    const tiles = document.createElement('div');
-    tiles.classname = 'tiles';
-
-    tiles.appendChild(tiles);
-})
-})
 
 */
