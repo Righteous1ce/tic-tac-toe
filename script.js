@@ -1,3 +1,5 @@
+
+
 ////////// CREATE PLAYER \\\\\\\\\\
 
 const createPlayers = (name1, name2) => {
@@ -59,7 +61,7 @@ const gameBoard = (() => {
       });
   });
 
-  // Return the game board object
+  
   return {
       board: board,
       tiles: tiles
