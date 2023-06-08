@@ -1,6 +1,6 @@
 
 
-////////// CREATE PLAYER \\\\\\\\\\
+//////////////////// CREATE PLAYER \\\\\\\\\\\\\\\\\\\\
 
 const createPlayers = (name1, name2) => {
     const player1 = {
@@ -13,14 +13,14 @@ const createPlayers = (name1, name2) => {
       symbol: "O"
     };
   
-    return { player1, player2 };
+    return {player1, player2};
   };
   
-  const players = createPlayers("Player 1", "Player 2");
+  const players = createPlayers("Player1", "Player2");
 
 
   const currentPlayerSymbol = (() => {
-    let currentPlayer = players.player1;
+    let currentPlayer = players.player2;
   
     return () => {
       if (currentPlayer === players.player1) {
@@ -33,7 +33,9 @@ const createPlayers = (name1, name2) => {
 })();
 
 
-////////// GAMEBOARD OBJECT \\\\\\\\\\
+//////////////////// GAMEBOARD OBJECT \\\\\\\\\\\\\\\\\\\\
+
+
 const gameBoard = (() => {
   let board = [];
   for (let i = 0; i < 9; i++) {
@@ -41,6 +43,25 @@ const gameBoard = (() => {
   }
 
   let gameBoardContainer = document.getElementById('gameboard');
+
+  board.forEach((item, index) => {
+    const tile = document.createElement('div');
+    tile.className = 'tile';
+    tile.dataset.tileContent = "";
+    gameBoardContainer.appendChild(tile);
+});
+
+let tiles = gameBoardContainer.querySelectorAll('.tile');
+
+tiles.forEach((tile, index) => {
+    tile.addEventListener('click', () => {
+        if (tile.dataset.tileContent === "") {
+            const player = currentPlayerSymbol();
+            tile.dataset.tileContent = player;
+            tile.textContent = player;
+        }
+    });
+});
 
 
 
@@ -80,46 +101,44 @@ function updateBoard(tileIndex, currentPlayerSymbol){
 
 
 
-  board.forEach((item, index) => {
-      const tile = document.createElement('div');
-      tile.className = 'tile';
-      tile.dataset.tileContent = "";
-      gameBoardContainer.appendChild(tile);
-  });
 
-  let tiles = gameBoardContainer.querySelectorAll('.tile');
+const infoDisplay = document.getElementById("info");
 
-  tiles.forEach((tile, index) => {
-      tile.addEventListener('click', () => {
-          if (tile.dataset.tileContent === "") {
-              const player = currentPlayerSymbol();
-              tile.dataset.tileContent = player;
-              tile.textContent = player;
-          }
-      });
-  });
+function displayWinner(checkForWinner, currentPlayerSymbol){
+  let isWinner = checkForWinner(currentPlayerSymbol);
+
+  if(isWinner){
+    console.log(`player ${currentPlayerSymbol} is the winner!`);
+  } else{
+    console.log(`no winner yet`);
+  }
+
+}
+
+
+
+
+
 
   
   return {
       board,
       updateBoard,
       checkForWinner,
+      displayWinner,
       
   };
 })();
 
 
-
-
-  ////////// DISPLAY \\\\\\\\\\
-
-  const infoDisplay = document.getElementById('info');
   
 
-console.log(gameBoard);
-gameBoard.updateBoard(0, "X");
-gameBoard.updateBoard(1, "X");
-gameBoard.updateBoard(2, "X");
-const playerXWins = gameBoard.checkForWinner('X');
 
-console.log(playerXWins);
+gameBoard.updateBoard(7, "O");
+gameBoard.updateBoard(1, "O");
+gameBoard.updateBoard(4, "O");
+const playerOWins = gameBoard.checkForWinner("O");
+
+console.log(playerOWins);
+
+gameBoard.displayWinner(gameBoard.checkForWinner, currentPlayerSymbol());
